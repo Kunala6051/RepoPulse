@@ -1,0 +1,24 @@
+# Generic agent-worker deployment template — one per agent (documentation, risk, tech_debt, summary, qa).
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agent-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: agent-worker
+  template:
+    metadata:
+      labels:
+        app: agent-worker
+    spec:
+      containers:
+        - name: agent-worker
+          image: repopulse-agent:latest
+          env:
+            - name: AGENT_MODULE
+              value: "documentation"
+          envFrom:
+            - secretRef:
+                name: repopulse-secrets
