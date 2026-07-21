@@ -1,0 +1,12 @@
+# Generic service template placeholder — most services are defined alongside their deployment
+# (see backend.yaml, frontend.yaml, redis.yaml).
+apiVersion: v1
+kind: Service
+metadata:
+  name: placeholder
+spec:
+  selector:
+    app: placeholder
+  ports:
+    - port: 80
+      targetPort: 80

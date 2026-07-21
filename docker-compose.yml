@@ -1,0 +1,74 @@
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  backend:
+    build:
+      context: .
+      dockerfile: docker/backend.Dockerfile
+    env_file: .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend.Dockerfile
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+  agent-documentation:
+    build:
+      context: .
+      dockerfile: docker/agent.Dockerfile
+      args:
+        AGENT_MODULE: documentation
+    env_file: .env
+    depends_on:
+      - redis
+
+  agent-risk:
+    build:
+      context: .
+      dockerfile: docker/agent.Dockerfile
+      args:
+        AGENT_MODULE: risk
+    env_file: .env
+    depends_on:
+      - redis
+
+  agent-tech-debt:
+    build:
+      context: .
+      dockerfile: docker/agent.Dockerfile
+      args:
+        AGENT_MODULE: tech_debt
+    env_file: .env
+    depends_on:
+      - redis
+
+  agent-summary:
+    build:
+      context: .
+      dockerfile: docker/agent.Dockerfile
+      args:
+        AGENT_MODULE: summary
+    env_file: .env
+    depends_on:
+      - redis
+
+  agent-qa:
+    build:
+      context: .
+      dockerfile: docker/agent.Dockerfile
+      args:
+        AGENT_MODULE: qa
+    env_file: .env
+    depends_on:
+      - redis
