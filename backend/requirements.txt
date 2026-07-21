@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+pydantic
+pydantic-settings
+redis
+langgraph
+anthropic
+pytest
+pytest-asyncio
+black
+ruff
